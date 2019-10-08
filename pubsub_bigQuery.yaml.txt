@@ -1,0 +1,30 @@
+﻿apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: bigquery-controller
+  labels:
+    name: bigquery-controller
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        name: bigquery-controller
+    spec:
+      containers:
+      - name: bigquery
+        image: gcr.io/google-samples/pubsub-bq-pipe:v5
+        env:
+        - name: PROCESSINGSCRIPT
+          value: pubsub-to-bigquery
+        # Change this to your pubsub topic
+        - name: PUBSUB_TOPIC
+          value: projects/servian-mohamed-sandbox/topics/PubSubTest
+        # Change this to your project ID.
+        - name: PROJECT_ID
+          value: servian-mohamed-sandbox
+        # Change the following two settings to your dataset and table.
+        - name: BQ_DATASET
+          value: Twitter
+        - name: BQ_TABLE
+          value: tweets

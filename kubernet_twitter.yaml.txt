@@ -1,0 +1,34 @@
+﻿apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: twitter-stream
+  labels:
+    name: twitter-stream
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: twitter-stream
+    spec:
+      containers:
+      - name: twitter-to-pubsub
+        image: gcr.io/google-samples/pubsub-bq-pipe:v5
+        env:
+        - name: PROCESSINGSCRIPT
+          value: twitter-to-pubsub
+        # Change this to your pubsub topic
+        - name: PUBSUB_TOPIC
+          value: projects/servian-mohamed-sandbox/topics/PubSubTest
+        # Change the following four settings to your twitter credentials
+        # information.
+        - name: CONSUMERKEY
+          value: 3StVQT4791gKlz2R3TPcVyREq
+        - name: CONSUMERSECRET
+          value: HIT3I1ApKjcPZHnlE9fQKZydaq12pM7a6Z7ebPCuO0SeU3UWWH
+        - name: ACCESSTOKEN
+          value: 14556719-LlA3xKuSMGtgdNXmRbcXsbFOJtdOxddCPS2dE8euS 
+        - name: ACCESSTOKENSEC
+          value: UcwEzrm26oG5QxNrWyvT5dGenAJ7JVjkkscTRz058Qy9G
+        - name: TWSTREAMMODE
+          value: sample
